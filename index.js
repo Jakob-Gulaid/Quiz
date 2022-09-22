@@ -1,16 +1,16 @@
 let sporsmal = [
     {
-        sporsmal: "Hva er en gris?",
-        alt1: "et dyr",
-        alt2: "en gjenstand",
-        alt3: "en feit bil",
-        alt4: "et menneskenavn",
+        sporsmal: "Hva er dette?",
+        alt1: "Minne",
+        alt2: "Hovedkort",
+        alt3: "SSD",
+        alt4: "CPU",
         alt5: "neste spørsmål",
         riktig: 1,
         svart: false,
     },
     {
-        sporsmal: "hvor mange Aner trenger du for å bytte en lyspære?",
+        sporsmal: "hva står SSD for?",
         alt1: "1, Ane er handy",
         alt2: "Minst et par. hun er litt vimsete",
         alt3: "har ikke noe å si. klarer det ikke uansett",
@@ -56,6 +56,11 @@ function init() {
 
 function handleAnswer(alt) {
     if (isWaiting) return
+    if (currentSpm == sporsmal.length -1){
+        quiz()
+        console.log("hvaa")
+        return
+    }
     /*
     1. se om svaret er riktig
     2. gjøre boksen rød eller grønn basert på svaret
@@ -69,6 +74,8 @@ function handleAnswer(alt) {
         const newalt = document.getElementById("alt" + alt.toString())
         newalt.innerText = "Riktig!"
         newalt.className = "bg-green-700 flex p-4 rounded-md h-40 w-96 items-center justify-center"
+
+    
 
         const spm = document.getElementById("spm")
 
@@ -119,10 +126,13 @@ function handleAnswer(alt) {
 
     else {
         console.log("hei")
-        const newalt = document.getElementById("alt" + alt.toString())
+        let newalt = document.getElementById("alt" + alt.toString())
         newalt.innerText = "Feil! Noob"
         newalt.className = "bg-red-700 flex p-4 rounded-md h-40 w-96 items-center justify-center shadow-md hover:shadow-2xl"
     }
+
+
+
 
 }
 
@@ -166,4 +176,16 @@ function setSpm(spmID) {
         }
 
     }, 200);
+}
+
+function quiz() {
+        let sko = document.getElementById("quizen")
+        let hore = document.getElementById("finishPage")
+        let slutt = document.getElementById("sluttPoeng")
+        sko.innerHTML = ""
+        hore.className = "z-20 flex h-screen w-screen bg-blue-300 justify-center items-center"
+        slutt.innerHTML= "du fikk " + poengene + " poeng"
+
+    
+    
 }

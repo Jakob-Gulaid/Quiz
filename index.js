@@ -7,7 +7,7 @@ let sporsmal = [
         alt4: "et menneskenavn",
         alt5: "neste spørsmål",
         riktig: 2,
-        svart: null,
+        svart: false,
     },
     {
         sporsmal: "hvor mange Aner trenger du for å bytte en lyspære?",
@@ -17,7 +17,7 @@ let sporsmal = [
         alt4: "trippel espresso",
         alt5: "neste spørsmål",
         riktig: 3,
-        svart: null
+        svart: false
     },
     {
         sporsmal: "hvor mange G-er trenger man for å bytte en lyspære?",
@@ -25,7 +25,8 @@ let sporsmal = [
         alt2: "Minst et par. han er litt fjern",
         alt3: "har ikke noe å si. klarer det uansett",
         alt4: "vær forsiksiktig, før han stjeler lyspæra",
-        riktig: 1
+        riktig: 1,
+        svart: false,
     },
     {
         sporsmal: "Hihihihi",
@@ -34,13 +35,12 @@ let sporsmal = [
         alt3: "har ikke noe å si. klarer det uansett",
         alt4: "vær forsiksiktig, før han stjeler lyspæra",
         riktig: 1,
-        svart: null,
+        svart: false,
     }
 ]
 let poengene = 0
 let currentSpm = 0
-let ikkeDobbel = 0
-
+let isWaiting = false
 console.log("hey")
 
 function init() {
@@ -55,39 +55,38 @@ function init() {
 }
 
 function handleAnswer(alt) {
+    if (isWaiting) return
     /*
     1. se om svaret er riktig
     2. gjøre boksen rød eller grønn basert på svaret
     3. bytte spørsmål
     */
     console.log("he")
-    document.getElementById("alt" + sporsmal[currentSpm].riktig).ariaDisabled = false
 
-    if (alt == sporsmal[currentSpm].riktig) {
-        document.getElementById("alt" + sporsmal[currentSpm].riktig).ariaDisabled = true
+    if (alt == sporsmal[currentSpm].riktig &&
+        !sporsmal[currentSpm].svart
+    ) {
         const newalt = document.getElementById("alt" + alt.toString())
-        sporsmal[currentSpm].svart = alt
         newalt.innerText = "Riktig!"
         newalt.className = "bg-green-700 flex p-4 rounded-md h-40 w-96 items-center justify-center"
 
         const spm = document.getElementById("spm")
 
-
-
         console.log(poeng)
-        
-        ikkeDobbel +=1
+        console.log(sporsmal[currentSpm].svart)
 
-        if (ikkeDobbel === 1){
+
+        if (!sporsmal[currentSpm].svart) {
             poengene += 1
+
         }
         document.getElementById("poeng").innerText = "Poeng:" + poengene
+        sporsmal[currentSpm].svart = true;
 
-        console.log(ikkeDobbel)
 
+        isWaiting = true
         setTimeout(() => {
-            currentSpm += 1
-
+            currentSpm++;
             spm.innerText = sporsmal[currentSpm].sporsmal
             document.getElementById("alt1").innerText = sporsmal[currentSpm].alt1
             document.getElementById("alt2").innerText = sporsmal[currentSpm].alt2
@@ -97,7 +96,7 @@ function handleAnswer(alt) {
             alt2.className = "flex p-4 rounded-md h-40 w-96 items-center justify-center shadow-md hover:shadow-2xl"
             alt3.className = "flex p-4 rounded-md h-40 w-96 items-center justify-center shadow-md hover:shadow-2xl"
             alt4.className = "flex p-4 rounded-md h-40 w-96 items-center justify-center shadow-md hover:shadow-2xl"
-            ikkeDobbel = 0
+            isWaiting = false
 
         }, 1000);
 
@@ -105,20 +104,19 @@ function handleAnswer(alt) {
 
     }
     else if (alt == sporsmal[currentSpm].neste)
-            nesteSpm(0)
+        nesteSpm(0)
 
 
 
 
 
-    else if (alt == sporsmal[currentSpm].forrige) 
-        {
-            forrigeSpm(0)
-                console.log("yoo")
-        }
+    else if (alt == sporsmal[currentSpm].forrige) {
+        forrigeSpm(0)
+        console.log("yoo")
+    }
 
 
-        
+
     else {
         console.log("hei")
         const newalt = document.getElementById("alt" + alt.toString())
@@ -163,8 +161,8 @@ function setSpm(spmID) {
         alt3.className = "flex p-4 rounded-md h-40 w-96 items-center justify-center shadow-md hover:shadow-2xl"
         alt4.className = "flex p-4 rounded-md h-40 w-96 items-center justify-center shadow-md hover:shadow-2xl"
 
-        if (sporsmal[currentSpm].svart != null){
-console.log("g er er tulling", sporsmal[currentSpm].svart)
+        if (sporsmal[currentSpm].svart != null) {
+            console.log("g er er tulling", sporsmal[currentSpm].svart)
         }
 
     }, 200);

@@ -6,7 +6,7 @@ let sporsmal = [
         alt3: "en feit bil",
         alt4: "et menneskenavn",
         alt5: "neste spørsmål",
-        riktig: 2,
+        riktig: 1,
         svart: false,
     },
     {

@@ -57,6 +57,7 @@ function init() {
 
 function handleAnswer(alt) {
     if (isWaiting) return
+    if (feil === 2) return
     if (alt == sporsmal[currentSpm].riktig) {
         if (currentSpm == sporsmal.length - 1) {
             poengene += 1
@@ -137,10 +138,11 @@ function handleAnswer(alt) {
         newalt.innerText = "Feil! Noob"
         newalt.className = "bg-red-700 flex p-4 rounded-md h-40 w-96 items-center justify-center shadow-md hover:shadow-2xl"
         feil += 1
-        if (feil == maksFeil){
+        if (feil >= maksFeil){
+            isWaiting = true
             setTimeout(() => {
-                setSpm(currentSpm + 1)
-                feil = 0
+                viderefeil()
+                isWaiting = false
             }, 300);
             if (currentSpm == sporsmal.length - 1) {
                 quiz()
@@ -217,7 +219,7 @@ function quiz() {
 
 
     function igjen() {
-        setSpm(0)
+
         
 
     }
@@ -234,10 +236,14 @@ function igjen() {
     quizen.className = "show"
     ferdig.className = "hidden"
     setSpm(0)
+    poengene = 0
 }
 
 
-
-
-
+function viderefeil(){
+    setTimeout(() => {
+        setSpm(currentSpm + 1)
+        feil = 0 
+    }, 500);
+}
 

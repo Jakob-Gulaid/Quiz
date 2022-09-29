@@ -1,31 +1,29 @@
 let sporsmal = [
     {
-        sporsmal: "Hva er dette?",
-        alt1: "Minne",
-        alt2: "Hovedkort",
-        alt3: "SSD",
-        alt4: "CPU",
-        alt5: "neste spørsmål",
+        sporsmal: "Hva er RAM?",
+        alt1: "korttidsminne for PC-en",
+        alt2: "en type grafikkort",
+        alt3: "regulerer temperatur",
+        alt4: "RAM er ikke ekte",
         riktig: 1,
         svart: false,
     },
     {
         sporsmal: "hva står SSD for?",
-        alt1: "1, Ane er handy",
-        alt2: "Minst et par. hun er litt vimsete",
-        alt3: "har ikke noe å si. klarer det ikke uansett",
-        alt4: "trippel espresso",
-        alt5: "neste spørsmål",
+        alt1: "Solid-Speed Drive",
+        alt2: "Super-Speed Drive",
+        alt3: "Solid-State Drive",
+        alt4: "Super-State Drive",
         riktig: 3,
         svart: false
     },
     {
-        sporsmal: "hvor mange G-er trenger man for å bytte en lyspære?",
-        alt1: "1, Jakob er gud",
-        alt2: "Minst et par. han er litt fjern",
-        alt3: "har ikke noe å si. klarer det uansett",
-        alt4: "vær forsiksiktig, før han stjeler lyspæra",
-        riktig: 1,
+        sporsmal: "hva står CPU for?",
+        alt1: "Computer processing unit",
+        alt2: "Computer power utilizer",
+        alt3: "canvas player up",
+        alt4: "Central Processing Unit",
+        riktig: 4,
         svart: false,
     },
     {
@@ -37,7 +35,7 @@ let sporsmal = [
         riktig: 1,
         svart: false,
     }
-]
+]   
 let poengene = 0
 let currentSpm = 0
 let isWaiting = false
@@ -87,7 +85,7 @@ function handleAnswer(alt) {
 
         const spm = document.getElementById("spm")
 
-        console.log(poeng)
+        console.log(window.localStorage.getItem("navnet"))
         console.log(sporsmal[currentSpm].svart)
 
 
@@ -143,7 +141,7 @@ function handleAnswer(alt) {
             setTimeout(() => {
                 viderefeil()
                 isWaiting = false
-            }, 300);
+            }, 200);
             if (currentSpm == sporsmal.length - 1) {
                 quiz()
                 console.log("hvaa")
@@ -207,6 +205,8 @@ function quiz() {
     let sPoeng = document.getElementById("sluttPoeng")
     let skjul = document.getElementById("poeng")
     let omstart = document.getElementById("prøveIgjen")
+    let gratulerer = document.getElementById("gratulerer")
+    gratulerer.innerHTML = "Gratulerer, " + window.localStorage.getItem("navnet") + "!"
     skjul.className = "hidden"
     quiz.className = "hidden"
     ferdig.className = "z-20 flex h-screen w-screen bg-emerald-50 justify-center items-center"
@@ -215,35 +215,20 @@ function quiz() {
     omstart.className = "flex text-xl justify-center item-center"
 
 
-
-
-
-    function igjen() {
-
-        
-
-    }
-
-
 }
 
 
 function igjen() {
-    let ferdig = document.getElementById("finishPage")
-    let quizen = document.getElementById("quizen")
-    let poeng = document.getElementById("poeng")
-    poeng.className = " flex w-2/3 h-40  p-3 rounded-md shadow-2xl items-center justify-center hover:bg-slate-400 bg-white"
-    quizen.className = "show"
-    ferdig.className = "hidden"
-    setSpm(0)
-    poengene = 0
+    window.location.reload()
+   
 }
 
 
 function viderefeil(){
+
     setTimeout(() => {
         setSpm(currentSpm + 1)
         feil = 0 
-    }, 500);
+    }, 100);
 }
 

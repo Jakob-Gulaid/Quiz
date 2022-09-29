@@ -32,7 +32,7 @@ function lagre_navn(navn){
             let hei_id = document.getElementById("hei")
             let tilquiz_id = document.getElementById("tilQuiz")
             console.log(navn_id.value)
-            localStorage.setItem("navnet", navn_id.value)
+            window.localStorage.setItem("navnet", navn_id.value)
             console.log(localStorage.getItem("navnet"))
             hei_id.innerHTML = "Hei, " + localStorage.getItem("navnet")
             tilquiz_id.className = "bg-grey-100 outline rounded p-3"
